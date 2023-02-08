@@ -6,8 +6,12 @@ import { useEffect, useState } from 'react'
 
 const inter = Inter({ subsets: ['latin'] })
 
+type data = {
+  time: string
+}
+
 export default function Home({ data }: { data: { time: string } }) {
-  const serverData = JSON.parse(data)
+  const serverData = JSON.parse(data.toString())
 
   const [time, setTime] = useState<Date | null>(null)
   useEffect(() => {
