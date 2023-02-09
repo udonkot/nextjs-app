@@ -2,24 +2,26 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import  {WebClient} from '@slack/web-api'
 
 /**
- * メッセージ送信API
+ * リアクション取得API
+ * TODO:作成中
  * @param req
  * @param res
  */
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   try {
     const token = process.env.NEXTJS_APP_SLACK_TOKEN
-    const channel = 'C015TFG556F'
-    const message = req.query.text as string
+    const channel = req.query.channel as string
 
     const client = new WebClient(token)
 
     // お試しでメッセージ送信
-    await client.chat.postMessage(
+    const reactions = await client.reactions.get(
       {
         channel: channel,
-        text: message ?? ''
-      })
+        token: token
+      }
+    )
+    res.status(200).json(reactions)
   } catch (error) {
     console.error(error)
   }
