@@ -40,10 +40,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       }
     })
 
-    res.status(200).json({
-      result: 'ok',
-      userlist:channelList
-    });
+    res.status(200).json(channelList);
 
   } catch (error) {
     console.error(error)
