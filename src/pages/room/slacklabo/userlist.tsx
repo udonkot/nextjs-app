@@ -31,8 +31,11 @@ export const UserList = () => {
       dataList.push(
         <tr key={idx}>
           <td>{idx}</td>
-          <td>{data.name}</td>
+          <td>{data.unitname}</td>
+          <td>{data.realname}</td>
           <td>{data.displayname}</td>
+          <td>{data.memo}</td>
+          <td>{data.name}</td>
           <td>{data.id}</td>
         </tr>
       )
@@ -56,9 +59,12 @@ export const UserList = () => {
               <table border={1}>
                 <thead>
                   <td>No</td>
-                  <td>Name</td>
-                  <td>Display Name</td>
-                  <td>ID</td>
+                  <td>ユニット名</td>
+                  <td>氏名(英字)</td>
+                  <td>氏名(漢字)</td>
+                  <td>メモ</td>
+                  <td>メールアカウント(ユーザ)</td>
+                  <td>SLACK ID</td>
                 </thead>
                 <tbody>{dispUserList()}</tbody>
               </table>

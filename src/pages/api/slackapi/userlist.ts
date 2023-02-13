@@ -5,6 +5,9 @@ export type userListType = {
   id: string,
   name: string,
   displayname: string,
+  realname: string,
+  unitname: string,
+  memo:string,
 }
 
 /**
@@ -25,23 +28,52 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const apiResponse = await client.users.list(option)
     apiResponse.members?.forEach((member) => {
       if( !member.deleted ) {
+        let memo, displayName, unit, realName :string = '';
+
+        const display = member.profile?.display_name?.split('-') ?? []
+        if(display?.length === 2) {
+          displayName = display[0]
+          memo = display[1]
+        }
+
+        const real = member.real_name?.split('-') ?? []
+        if(real?.length === 2) {
+          realName = real[0]
+          unit = real[1]
+        }
+
         userList.push(
           {
             id: member.id ?? 'none',
             name: member.name ?? 'none',
-            displayname: member.profile?.display_name ?? 'none',
+            displayname: displayName ?? member.profile?.display_name ?? 'none',
+            realname: realName ?? member.real_name ?? 'none',
+            memo: memo ?? '',
+            unitname: unit ?? '',
           }
         )
       }
     })
 
     userList.sort((a,b) => {
-      if(a.name > b.name) {
-        return 1
-      } else {
-        return -1
+      if(a.unitname !== b.unitname) {
+        if(a.unitname > b.unitname) {
+          return -1
+        } else {
+          return 1
+        }
       }
+
+      if(a.displayname !== b.displayname ) {
+        if(a.displayname > b.displayname) {
+          return -1
+        } else {
+          return 1
+        }
+      }
+      return 1
     })
+
 
     res.status(200).json(userList);
 
