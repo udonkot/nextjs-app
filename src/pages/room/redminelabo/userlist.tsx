@@ -16,7 +16,7 @@ const getUserList = async () => {
  * @returns
  */
 export const UserList = () => {
-  const [userList, setUserList] = useState<userListType>([])
+  const [userList, setUserList] = useState<userListType>()
   const [showTrial01Display, setShowTrial01Display] = useState(false)
 
   const showTrial01 = async () => {
@@ -28,7 +28,7 @@ export const UserList = () => {
   const dispUserList = () => {
     const dataList: JSX.Element[] = []
     console.log(userList)
-    userList.users.forEach((data, idx) => {
+    userList?.users.forEach((data, idx) => {
       dataList.push(
         <tr key={idx}>
           <td>{idx}</td>
