@@ -1,4 +1,4 @@
-import { slackUserType } from '@/pages/type/slackapiType'
+import { slackUserType } from '@/type/slackapiType'
 import { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { setState as setStateSlackUser } from 'src/slice/slackUserListSlice'

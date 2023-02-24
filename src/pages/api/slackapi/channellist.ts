@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import  {ConversationsListArguments , WebClient} from '@slack/web-api'
-import { slackCannelType } from "@/pages/type/slackapiType";
+import { slackCannelType } from "@/type/slackapiType";
 
 /**
  * チャンネル一覧取得API

@@ -1,4 +1,4 @@
-import { slackCannelType } from "@/pages/type/slackapiType";
+import { slackCannelType } from "@/type/slackapiType";
 import {createSlice, PayloadAction } from "@reduxjs/toolkit"
 
 export type SlackChannelState = {
