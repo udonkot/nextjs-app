@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import  {UsersListArguments , WebClient} from '@slack/web-api'
-import { slackUserType } from "@/pages/type/slackapiType";
+import { slackUserType } from "@/type/slackapiType";
 
 /**
  * アクティブユーザ取得API

@@ -1,4 +1,4 @@
-import { slackCannelType } from '@/pages/type/slackapiType'
+import { slackCannelType } from '@/type/slackapiType'
 import { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { setState as setStateSlackChannel } from 'src/slice/slackChannelListSlice'
