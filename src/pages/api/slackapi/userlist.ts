@@ -1,14 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import  {UsersListArguments , WebClient} from '@slack/web-api'
-
-export type userListType = {
-  id: string,
-  name: string,
-  displayname: string,
-  realname: string,
-  unitname: string,
-  memo:string,
-}
+import { slackUserType } from "@/pages/type/slackapiType";
 
 /**
  * アクティブユーザ取得API
@@ -23,7 +15,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     const option:UsersListArguments   = {}
 
-    const userList:userListType[] = []
+    const userList:slackUserType[] = []
 
     const apiResponse = await client.users.list(option)
     apiResponse.members?.forEach((member) => {

@@ -1,10 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import  {ConversationsListArguments , WebClient} from '@slack/web-api'
-
-export type channelListType = {
-  id: string,
-  name: string,
-}
+import { slackCannelType } from "@/pages/type/slackapiType";
 
 /**
  * チャンネル一覧取得API
@@ -19,7 +15,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     const option:ConversationsListArguments = {}
 
-    const channelList:channelListType[] = []
+    const channelList:slackCannelType[] = []
 
     const apiResponse = await client.conversations.list(option)
     apiResponse.channels?.forEach((channel) => {

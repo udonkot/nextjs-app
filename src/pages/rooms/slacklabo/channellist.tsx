@@ -1,8 +1,11 @@
-import { useState } from 'react'
-import { channelListType } from '../../api/slackapi/channellist'
+import { slackCannelType } from '@/pages/type/slackapiType'
+import { useEffect, useState } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
+import { setState as setStateSlackChannel } from 'src/slice/slackChannelListSlice'
+import { RootState } from 'src/store/createStore'
 
 /**
- * チャンネル一覧取得API
+ * Slackチャンネル一覧取得API
  * @returns
  */
 const getChannelList = async () => {
@@ -16,13 +19,33 @@ const getChannelList = async () => {
  * @returns
  */
 export const Channellist = () => {
-  const [chauserList, setChannelList] = useState<channelListType[]>([])
-  const [showTrial02Display, setShowTrial02Display] = useState(false)
+  // storeから取得
+  const slackChannel = useSelector(
+    (state: RootState) => state.slackChannel.slackChannelList
+  )
+  const dispatch = useDispatch()
 
-  const showTrial02 = async () => {
-    const channels = (await getChannelList()) as channelListType[]
+  // useState
+  const [chauserList, setChannelList] = useState<slackCannelType[]>([])
+
+  // 初期表示後の処理
+  useEffect(() => {
+    if (slackChannel.length > 0) {
+      setChannelList(slackChannel)
+    } else {
+      // storeから取得できない場合はAPI呼び出し
+      getSlackChannel()
+    }
+  }, [])
+
+  const getSlackChannel = async () => {
+    const channels = (await getChannelList()) as slackCannelType[]
     setChannelList(channels)
-    setShowTrial02Display(!showTrial02Display)
+    dispatch(
+      setStateSlackChannel({
+        slackChannelList: channels
+      })
+    )
   }
 
   const dispChannelList = () => {
@@ -42,26 +65,19 @@ export const Channellist = () => {
   return (
     <>
       <div className="contents">
-        <div className="header">
-          <h2>slack page!</h2>
-        </div>
         <div className="body">
-          <label onClick={() => showTrial02()}>
-            2.Slackチャンネル一覧※ラベルクリックで表示
-          </label>
-          <br />
-          {showTrial02Display && (
-            <>
-              <table border={1}>
-                <thead>
+          <>
+            <table border={1}>
+              <thead>
+                <tr>
                   <td>No</td>
                   <td>Name</td>
                   <td>ID</td>
-                </thead>
-                <tbody>{dispChannelList()}</tbody>
-              </table>
-            </>
-          )}
+                </tr>
+              </thead>
+              <tbody>{dispChannelList()}</tbody>
+            </table>
+          </>
         </div>
       </div>
     </>

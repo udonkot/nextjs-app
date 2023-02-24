@@ -1,5 +1,8 @@
-import { useState } from 'react'
-import { userListType } from '../../api/slackapi/userlist'
+import { slackUserType } from '@/pages/type/slackapiType'
+import { useEffect, useState } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
+import { setState as setStateSlackUser } from 'src/slice/slackUserListSlice'
+import { RootState } from 'src/store/createStore'
 
 /**
  * Slackユーザ一覧取得API
@@ -16,13 +19,35 @@ const getUserList = async () => {
  * @returns
  */
 export const UserList = () => {
-  const [userList, setUserList] = useState<userListType[]>([])
-  const [showTrial01Display, setShowTrial01Display] = useState(false)
+  // storeから取得
+  const slackUser = useSelector(
+    (state: RootState) => state.slackUser.slackUserList
+  )
+  const dispatch = useDispatch()
 
-  const showTrial01 = async () => {
-    const users = (await getUserList()) as userListType[]
+  // useState
+  const [userList, setUserList] = useState<slackUserType[]>([])
+
+  // 初期表示後の処理
+  useEffect(() => {
+    if (slackUser.length > 0) {
+      setUserList(slackUser)
+    } else {
+      // storeから取得できない場合はAPI呼び出し
+      getSlackUser()
+    }
+  }, [])
+
+  // Slackユーザ取得
+  const getSlackUser = async () => {
+    const users = (await getUserList()) as slackUserType[]
     setUserList(users)
-    setShowTrial01Display(!showTrial01Display)
+    // storeにセット
+    dispatch(
+      setStateSlackUser({
+        slackUserList: users
+      })
+    )
   }
 
   const dispUserList = () => {
@@ -46,18 +71,11 @@ export const UserList = () => {
   return (
     <>
       <div className="contents">
-        <div className="header">
-          <h2>slack page!</h2>
-        </div>
         <div className="body">
-          <label onClick={() => showTrial01()}>
-            Slackユーザ一覧※ラベルクリックで表示
-          </label>
-          <br />
-          {showTrial01Display && (
-            <>
-              <table border={1}>
-                <thead>
+          <>
+            <table border={1}>
+              <thead>
+                <tr>
                   <td>No</td>
                   <td>ユニット名</td>
                   <td>氏名(英字)</td>
@@ -65,11 +83,11 @@ export const UserList = () => {
                   <td>メモ</td>
                   <td>メールアカウント(ユーザ)</td>
                   <td>SLACK ID</td>
-                </thead>
-                <tbody>{dispUserList()}</tbody>
-              </table>
-            </>
-          )}
+                </tr>
+              </thead>
+              <tbody>{dispUserList()}</tbody>
+            </table>
+          </>
         </div>
       </div>
     </>

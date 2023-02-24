@@ -76,19 +76,10 @@ export default function Home({ data }: { data: { time: string } }) {
         </div>
 
         <div className={styles.grid}>
-          <h2 className={inter.className}>
-            Slack Labo <span>⇒</span>
-          </h2>
-          <Link href="/rooms/slacklabo/userlist">
-            <h3 className={inter.className}>ユーザ一覧</h3>
-            <p className={inter.className}>SlackAPIを使用したユーザ一覧表示</p>
-          </Link>
-
-          <Link href="/rooms/slacklabo/channellist">
-            <h3 className={inter.className}>チャンネル一覧</h3>
-            <p className={inter.className}>
-              SlackAPIを使用したチャンネル一覧表示
-            </p>
+          <Link href="/rooms/slacklabo">
+            <h2 className={inter.className}>
+              Slack Labo <span>⇒</span>
+            </h2>
           </Link>
         </div>
 
