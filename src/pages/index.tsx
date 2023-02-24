@@ -67,7 +67,7 @@ export default function Home({ data }: { data: { time: string } }) {
         </div>
 
         <div className={styles.grid}>
-          <Link href="/room/kondolabo">
+          <Link href="/rooms/kondolabo">
             <h2 className={inter.className}>
               kondoLabo <span>⇒</span>
             </h2>
@@ -76,19 +76,10 @@ export default function Home({ data }: { data: { time: string } }) {
         </div>
 
         <div className={styles.grid}>
-          <h2 className={inter.className}>
-            Slack Labo <span>⇒</span>
-          </h2>
-          <Link href="/room/slacklabo/userlist">
-            <h3 className={inter.className}>ユーザ一覧</h3>
-            <p className={inter.className}>SlackAPIを使用したユーザ一覧表示</p>
-          </Link>
-
-          <Link href="/room/slacklabo/channellist">
-            <h3 className={inter.className}>チャンネル一覧</h3>
-            <p className={inter.className}>
-              SlackAPIを使用したチャンネル一覧表示
-            </p>
+          <Link href="/rooms/slacklabo">
+            <h2 className={inter.className}>
+              Slack Labo <span>⇒</span>
+            </h2>
           </Link>
         </div>
 
@@ -96,7 +87,7 @@ export default function Home({ data }: { data: { time: string } }) {
           <h2 className={inter.className}>
             Redmine Labo <span>⇒</span>
           </h2>
-          <Link href="/room/redminelabo/userlist">
+          <Link href="/rooms/redminelabo/userlist">
             <h3 className={inter.className}>ユーザ一覧</h3>
             <p className={inter.className}>Redmineのユーザ一覧表示</p>
           </Link>
