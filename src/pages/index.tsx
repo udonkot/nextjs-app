@@ -84,12 +84,10 @@ export default function Home({ data }: { data: { time: string } }) {
         </div>
 
         <div className={styles.grid}>
-          <h2 className={inter.className}>
-            Redmine Labo <span>⇒</span>
-          </h2>
-          <Link href="/rooms/redminelabo/userlist">
-            <h3 className={inter.className}>ユーザ一覧</h3>
-            <p className={inter.className}>Redmineのユーザ一覧表示</p>
+          <Link href="/rooms/redminelabo">
+            <h2 className={inter.className}>
+              Redmine Labo <span>⇒</span>
+            </h2>
           </Link>
         </div>
       </main>
