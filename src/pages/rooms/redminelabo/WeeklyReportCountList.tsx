@@ -99,25 +99,22 @@ export const WeeklyReportCountList = () => {
     const dataList: JSX.Element[] = []
     const summary: summaryType[] = []
     if (ticketList.length > 0) {
-      const groupBy = ticketList?.reduce(
-        (result: redmineTicketType[], current: redmineTicketType) => {
-          const element = summary.findIndex(
-            (r) => r.author === current.author.name
-          )
+      ticketList?.forEach((ticket: redmineTicketType) => {
+        const element = summary.findIndex(
+          (r) => r.author === ticket.author.name
+        )
 
-          if (element > -1) {
-            summary[element].count++
-          } else {
-            summary.push({
-              author: current.author.name,
-              count: 1
-            })
-          }
+        if (element > -1) {
+          summary[element].count++
+        } else {
+          summary.push({
+            author: ticket.author.name,
+            count: 1
+          })
+        }
 
-          return summary
-        },
-        []
-      )
+        return summary
+      }, [])
 
       summary.sort((a, b) => {
         if (a.count > b.count) {
