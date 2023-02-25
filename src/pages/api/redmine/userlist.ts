@@ -1,23 +1,9 @@
+import { redmineUserType } from "@/type/redmineapiType";
 import axios from "axios";
 import type { NextApiRequest, NextApiResponse } from "next";
 
-export type users = {
-  id:string,
-    login:string,
-    admin:string,
-    firstname:string,
-    lastname:string,
-    mail:string,
-    created_on:string,
-    updated_on:string,
-    last_login_on:string,
-    passwd_changed_on:string,
-    twofa_scheme:string,
-
-}
-
 export type userListType = {
-  users: users[]
+  users: redmineUserType[]
 }
 
 /**

@@ -1,29 +1,27 @@
 import { useEffect, useState } from 'react'
-import Channellist from './channellist'
 import Userlist from './userlist'
+import WeeklyReportCountList from './WeeklyReportCountList'
 
 /**
  *
  * @returns
  */
-export const Slacklabo = () => {
-  const [showChannel, setShowChannel] = useState(false)
-  const [showChannelMsg, setshowChannelMsg] = useState('表示')
+export const Redminelabo = () => {
+  const [showReportCount, setShowReportCount] = useState(false)
+  const [showReportCountMsg, setShowReportCountMsg] = useState('表示')
   const [showUser, setShowUser] = useState(false)
   const [showUserMsg, setshowUserMsg] = useState('表示')
 
-  useEffect(() => {}, [showChannel])
-
   /**
-   * チャンネル表示非表示ボタン切替
+   * 週報提出表示非表示ボタン切替
    */
-  const changeShowChannel = () => {
-    if (!showChannel) {
-      setshowChannelMsg('非表示')
+  const changeShowReportCount = () => {
+    if (!showReportCount) {
+      setShowReportCountMsg('非表示')
     } else {
-      setshowChannelMsg('表示')
+      setShowReportCountMsg('表示')
     }
-    setShowChannel(!showChannel)
+    setShowReportCount(!showReportCount)
   }
 
   /**
@@ -42,25 +40,25 @@ export const Slacklabo = () => {
     <>
       <div className="contents">
         <div className="header">
-          <h2>SlackLabo page!</h2>
+          <h2>RedmineLabo page!</h2>
           <br />
         </div>
         <div className="body">
           <div>
             <h3 style={{ display: 'inline' }}>1.ユーザ一覧</h3>
             <button onClick={() => changeShowUser()}>{showUserMsg}</button>
-            <p>SlackAPIを使用したユーザ一覧表示※Activeユーザのみ</p>
+            <p>RedmineAPIを使用したユーザ一覧表示※Activeユーザのみ</p>
             <br />
             {showUser && <Userlist />}
           </div>
 
           <div>
-            <h3 style={{ display: 'inline' }}>2.チャンネル一覧</h3>
-            <button onClick={() => changeShowChannel()}>
-              {showChannelMsg}
+            <h3 style={{ display: 'inline' }}>2.週報提出数一覧</h3>
+            <button onClick={() => changeShowReportCount()}>
+              {showReportCountMsg}
             </button>
-            <p>SlackAPIを使用したチャンネル一覧表示※publicチャンネルのみ</p>
-            {showChannel && <Channellist />}
+            <p>ユニット内の週報提出数表示※DXサービスユニットのみ</p>
+            {showReportCount && <WeeklyReportCountList />}
           </div>
         </div>
       </div>
@@ -68,4 +66,4 @@ export const Slacklabo = () => {
   )
 }
 
-export default Slacklabo
+export default Redminelabo
