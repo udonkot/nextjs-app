@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import Channellist from './channellist'
+import Emojilist from './emojilist'
 import Userlist from './userlist'
 
 /**
@@ -11,6 +12,8 @@ export const Slacklabo = () => {
   const [showChannelMsg, setshowChannelMsg] = useState('表示')
   const [showUser, setShowUser] = useState(false)
   const [showUserMsg, setshowUserMsg] = useState('表示')
+  const [showEmoji, setShowEmoji] = useState(false)
+  const [showEmojiMsg, setshowEmojiMsg] = useState('表示')
 
   useEffect(() => {}, [showChannel])
 
@@ -38,6 +41,18 @@ export const Slacklabo = () => {
     setShowUser(!showUser)
   }
 
+  /**
+   * Slack絵文字表示非表示ボタン切替
+   */
+  const changeShowEmoji = () => {
+    if (!showEmoji) {
+      setshowEmojiMsg('非表示')
+    } else {
+      setshowEmojiMsg('表示')
+    }
+    setShowEmoji(!showEmoji)
+  }
+
   return (
     <>
       <div className="contents">
@@ -61,6 +76,14 @@ export const Slacklabo = () => {
             </button>
             <p>SlackAPIを使用したチャンネル一覧表示※publicチャンネルのみ</p>
             {showChannel && <Channellist />}
+          </div>
+
+          <div>
+            <h3 style={{ display: 'inline' }}>3.slack絵文字検索</h3>
+            <button onClick={() => changeShowEmoji()}>{showEmojiMsg}</button>
+            <p>SlackAPIを使用したチャンネル一覧表示※publicチャンネルのみ</p>
+            <br />
+            {showEmoji && <Emojilist />}
           </div>
         </div>
       </div>
