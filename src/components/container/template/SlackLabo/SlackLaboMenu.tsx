@@ -1,17 +1,12 @@
-import { Link } from '@chakra-ui/react'
+import PageHeader from '@/components/container/template/AppHeader'
 import { motion } from 'framer-motion'
 import { useEffect, useState } from 'react'
-import Channellist from './channellist'
-import Emojilist from './emojilist'
-import Userlist from './userlist'
-import styles from '@/styles/Home.module.css'
-import NextLink from 'next/link'
 
 /**
  *
  * @returns
  */
-export const Slacklabo = () => {
+export const SlackLaboMenu = () => {
   const [showChannel, setShowChannel] = useState(false)
   const [showChannelMsg, setshowChannelMsg] = useState('表示')
   const [showUser, setShowUser] = useState(false)
@@ -60,12 +55,9 @@ export const Slacklabo = () => {
   return (
     <>
       <motion.div
-        initial={{ opacity: 1, x: -10 }} // 初期状態
-        animate={{ opacity: 10, x: 10 }} // マウント時
+        initial={{ opacity: 0, x: 0 }} // 初期状態
+        animate={{ x: 100 }} // マウント時
         exit={{ opacity: 0, y: 10 }} // アンマウント時
-        // transition={{
-        //   duration: 3.5
-        // }}
       >
         <div className="contents">
           <div className="header">
@@ -73,27 +65,26 @@ export const Slacklabo = () => {
             <br />
           </div>
           <div className="body">
-            <div className={styles.grid}>
-              <NextLink href={'/rooms/slacklabo/userlist'} passHref>
-                <h3 style={{ display: 'inline' }}>1.ユーザ一覧</h3>
-                <p>SlackAPIを使用したユーザ一覧表示※Activeユーザのみ</p>
-              </NextLink>
+            <div>
+              <h3 style={{ display: 'inline' }}>1.ユーザ一覧</h3>
+              <button onClick={() => changeShowUser()}>{showUserMsg}</button>
+              <p>SlackAPIを使用したユーザ一覧表示※Activeユーザのみ</p>
+              <br />
             </div>
-            <br />
 
-            <div className={styles.grid}>
-              <NextLink href={'/rooms/slacklabo/channellist'} passHref>
-                <h3 style={{ display: 'inline' }}>2.チャンネル一覧</h3>
-                <p>SlackAPIを使用したチャンネル一覧表示※publicチャンネルのみ</p>
-              </NextLink>
+            <div>
+              <h3 style={{ display: 'inline' }}>2.チャンネル一覧</h3>
+              <button onClick={() => changeShowChannel()}>
+                {showChannelMsg}
+              </button>
+              <p>SlackAPIを使用したチャンネル一覧表示※publicチャンネルのみ</p>
             </div>
-            <br />
 
-            <div className={styles.grid}>
-              <NextLink href={'/rooms/slacklabo/emojilist'} passHref>
-                <h3 style={{ display: 'inline' }}>3.slack絵文字検索</h3>
-                <p>SlackAPIを使用したチャンネル一覧表示※publicチャンネルのみ</p>
-              </NextLink>
+            <div>
+              <h3 style={{ display: 'inline' }}>3.slack絵文字検索</h3>
+              <button onClick={() => changeShowEmoji()}>{showEmojiMsg}</button>
+              <p>SlackAPIを使用したチャンネル一覧表示※publicチャンネルのみ</p>
+              <br />
             </div>
           </div>
         </div>
@@ -102,4 +93,4 @@ export const Slacklabo = () => {
   )
 }
 
-export default Slacklabo
+export default SlackLaboMenu

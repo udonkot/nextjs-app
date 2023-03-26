@@ -3,6 +3,16 @@ import { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { setState as setStateSlackChannel } from 'src/slice/slackChannelListSlice'
 import { RootState } from 'src/store/createStore'
+import {
+  Table,
+  Thead,
+  Tbody,
+  Tr,
+  Td,
+  TableContainer,
+  Input,
+  Radio
+} from '@chakra-ui/react'
 
 /**
  * Slackチャンネル一覧取得API
@@ -67,16 +77,18 @@ export const Channellist = () => {
       <div className="contents">
         <div className="body">
           <>
-            <table border={1}>
-              <thead>
-                <tr>
-                  <td>No</td>
-                  <td>Name</td>
-                  <td>ID</td>
-                </tr>
-              </thead>
-              <tbody>{dispChannelList()}</tbody>
-            </table>
+            <TableContainer overflowX="unset" overflowY="unset">
+              <Table variant="simple" colorScheme="teal">
+                <Thead position="sticky" top={0} zIndex="docked">
+                  <Tr bg="gray.200">
+                    <Td>No</Td>
+                    <Td>Name</Td>
+                    <Td>ID</Td>
+                  </Tr>
+                </Thead>
+                <Tbody>{dispChannelList()}</Tbody>
+              </Table>
+            </TableContainer>
           </>
         </div>
       </div>
