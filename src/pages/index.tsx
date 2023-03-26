@@ -10,6 +10,17 @@ import { motion } from 'framer-motion'
 import FadeInTitle from 'src/components/container/organisms/FadeInTitle'
 import Slacklabo from './rooms/slacklabo'
 import SlackLaboMenu from '@/components/container/template/SlackLabo/SlackLaboMenu'
+import {
+  Card,
+  Button,
+  CardHeader,
+  CardBody,
+  CardFooter,
+  Heading,
+  Text,
+  SimpleGrid
+} from '@chakra-ui/react'
+import { BsThreeDotsVertical } from 'react-icons/bs'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -32,45 +43,50 @@ export default function Home({ data }: { data: { time: string } }) {
 
   return (
     <>
-      {/* <Head>
-        <title>DXService TechLabo Next.js Application</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="icon" href="/favicon.ico" />
-      </Head> */}
-
-      <main className={styles.main}>
-        <div className={styles.description}></div>
-        <Logo width={20} height={20} />
-
-        <div className={styles.center}></div>
-
-        <div className={styles.grid}>
-          <Link href="/rooms/kondolabo">
-            <h2 className={inter.className}>
-              kondoLabo <span>⇒</span>
-            </h2>
-            <p className={inter.className}>個人的な学習、動作検証用</p>
-          </Link>
-        </div>
-
-        <div className={styles.grid}>
-          <Link href="/rooms/slacklabo">
-            <h2 className={inter.className}>
-              Slack Labo <span>⇒</span>
-            </h2>
-          </Link>
-        </div>
-
-        <div className={styles.grid}>
-          <Link href="/rooms/redminelabo">
-            <h2 className={inter.className}>
-              Redmine Labo <span>⇒</span>
-            </h2>
-          </Link>
-        </div>
-      </main>
-
-      {showSlackMenu && <SlackLaboMenu />}
+      <SimpleGrid
+        spacing={4}
+        templateColumns="repeat(auto-fill, minmax(200px, 1fr))"
+      >
+        <Card bg="gray.400">
+          <CardHeader>
+            <Heading size="md"> Slack Labo</Heading>
+          </CardHeader>
+          <CardBody>
+            <Text>Slack APIを利用した学習、動作検証用</Text>
+          </CardBody>
+          <CardFooter>
+            <Link href="/rooms/slacklabo">
+              <Button>View here</Button>
+            </Link>
+          </CardFooter>
+        </Card>
+        <Card bg="gray.400">
+          <CardHeader>
+            <Heading size="md"> Redmine Labo</Heading>
+          </CardHeader>
+          <CardBody>
+            <Text>Redmine APIを利用した学習、動作検証用</Text>
+          </CardBody>
+          <CardFooter>
+            <Link href="/rooms/redminelabo">
+              <Button>View here</Button>
+            </Link>
+          </CardFooter>
+        </Card>
+        <Card bg="gray.400">
+          <CardHeader>
+            <Heading size="md"> Personal Labo</Heading>
+          </CardHeader>
+          <CardBody>
+            <Text>個人的な学習、動作検証用</Text>
+          </CardBody>
+          <CardFooter>
+            <Link href="/rooms/personallabo/kondolabo">
+              <Button>View here</Button>
+            </Link>
+          </CardFooter>
+        </Card>
+      </SimpleGrid>
     </>
   )
 }

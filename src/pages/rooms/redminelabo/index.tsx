@@ -2,6 +2,7 @@ import { motion } from 'framer-motion'
 import { useEffect, useState } from 'react'
 import Userlist from './userlist'
 import WeeklyReportCountList from './WeeklyReportCountList'
+import NextLink from 'next/link'
 
 /**
  *
@@ -50,20 +51,22 @@ export const Redminelabo = () => {
           </div>
           <div className="body">
             <div>
-              <h3 style={{ display: 'inline' }}>1.ユーザ一覧</h3>
-              <button onClick={() => changeShowUser()}>{showUserMsg}</button>
-              <p>RedmineAPIを使用したユーザ一覧表示※Activeユーザのみ</p>
-              <br />
-              {showUser && <Userlist />}
+              <NextLink href={'/rooms/redminelabo/userlist'} passHref>
+                <h3 style={{ display: 'inline' }}>1.ユーザ一覧</h3>
+                <p>RedmineAPIを使用したユーザ一覧表示※Activeユーザのみ</p>
+              </NextLink>
             </div>
+            <br />
 
             <div>
-              <h3 style={{ display: 'inline' }}>2.週報提出数一覧</h3>
-              <button onClick={() => changeShowReportCount()}>
-                {showReportCountMsg}
-              </button>
-              <p>ユニット内の週報提出数表示※DXサービスユニットのみ</p>
-              {showReportCount && <WeeklyReportCountList />}
+              <NextLink
+                href={'/rooms/redminelabo/WeeklyReportCountList'}
+                passHref
+              >
+                <h3 style={{ display: 'inline' }}>2.週報提出数一覧</h3>
+                <p>RedmineAPIを使用したユーザ一覧表示※Activeユーザのみ</p>
+                <p>ユニット内の週報提出数表示</p>
+              </NextLink>
             </div>
           </div>
         </div>

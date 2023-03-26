@@ -30,6 +30,17 @@ export const UserList = () => {
 
   // 初期表示後の処理
   useEffect(() => {
+    const getRedmineUser = async () => {
+      const res = (await getUserList()) as redmineUserResponseType
+      setUserList(res.users)
+      // storeにセット
+      dispatch(
+        setStateRedmineUser({
+          redmineUserList: res.users
+        })
+      )
+    }
+
     if (redmineUser.length > 0) {
       setUserList(redmineUser)
     } else {
@@ -37,17 +48,6 @@ export const UserList = () => {
       getRedmineUser()
     }
   }, [])
-
-  const getRedmineUser = async () => {
-    const res = (await getUserList()) as redmineUserResponseType
-    setUserList(res.users)
-    // storeにセット
-    dispatch(
-      setStateRedmineUser({
-        redmineUserList: res.users
-      })
-    )
-  }
 
   const dispUserList = () => {
     const dataList: JSX.Element[] = []

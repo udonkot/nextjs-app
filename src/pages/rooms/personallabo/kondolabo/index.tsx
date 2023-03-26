@@ -2,6 +2,15 @@
 import AshitaNoCloud from '@/components/container/organisms/AshitaNoCloud/AshitaNoCloud'
 import AshitaNoCloudMBO from '@/components/container/organisms/AshitaNoCloud/AshitaNoCloudMBO'
 import { useState } from 'react'
+import {
+  Card,
+  Button,
+  CardHeader,
+  CardBody,
+  CardFooter,
+  Heading,
+  Text
+} from '@chakra-ui/react'
 
 const sendMessage = async (message: string) => {
   await fetch('/api/slackapi/postmessage?text=' + message)
@@ -37,7 +46,7 @@ export const Kondo = () => {
           <h2>kondo page!</h2>
         </div>
         <div className="body">
-          <div className="trial01">
+          {/* <div className="trial01">
             <label onClick={() => showTrial01()}>1.メッセージ送信</label>
             <br />
             {showTrial01Display && (
@@ -68,18 +77,25 @@ export const Kondo = () => {
                 <br />
               </>
             )}
-          </div>
-          <div className="trial03">
-            <label onClick={() => showTrial03()}>
-              3.あしたのクラウド評点シミュレータ
-            </label>
-            <br />
-            {showTrial03Display && (
-              <>
-                <AshitaNoCloud />
-              </>
-            )}
-          </div>
+          </div> */}
+          <Card bg="yellow.100">
+            <CardHeader>
+              <Heading size="md"> あしたのクラウド評点シミュレータ</Heading>
+            </CardHeader>
+            <CardBody>
+              <Text>
+                評点を入力するとスキルマップ、役職職責評価、MBOの合計と総合計が計算されます
+              </Text>
+            </CardBody>
+            <CardFooter>
+              <Button onClick={() => showTrial03()}>View here</Button>
+            </CardFooter>
+          </Card>
+          {showTrial03Display && (
+            <>
+              <AshitaNoCloud />
+            </>
+          )}
         </div>
       </div>
     </>
