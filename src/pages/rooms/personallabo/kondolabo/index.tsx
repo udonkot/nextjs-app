@@ -11,6 +11,11 @@ import {
   Heading,
   Text
 } from '@chakra-ui/react'
+import { useDispatch, useSelector } from 'react-redux'
+import { setState as setAppHeader } from 'src/slice/appHeaderSlice'
+
+import { RootState } from '@/store/createStore'
+import { setHeaderTitle } from '@/util/commonUtil'
 
 const sendMessage = async (message: string) => {
   await fetch('/api/slackapi/postmessage?text=' + message)
@@ -20,7 +25,15 @@ const getReaction = async (channel: string) => {
   await fetch('/api/slackapi/reactionsget?channel=' + channel)
 }
 
+/**
+ *
+ * @returns
+ */
 export const Kondo = () => {
+  const dispatch = useDispatch()
+
+  setHeaderTitle('Kondo Page', dispatch)
+
   const [message, setMessage] = useState('')
   const [channel, setChannel] = useState('')
   const [showTrial01Display, setShowTrial01Display] = useState(false)
@@ -42,9 +55,6 @@ export const Kondo = () => {
   return (
     <>
       <div className="contents">
-        <div className="header">
-          <h2>kondo page!</h2>
-        </div>
         <div className="body">
           {/* <div className="trial01">
             <label onClick={() => showTrial01()}>1.メッセージ送信</label>

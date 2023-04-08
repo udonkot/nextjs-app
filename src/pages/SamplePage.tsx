@@ -1,4 +1,4 @@
-import { FadeInTitle } from '@/components/container/organisms/FadeInTitle'
+import { FadeInLogo } from '@/components/presentational/molecules/Logo/FadeInLogo'
 
 export const SamplePage = () => {
   // useEffect(() => {
@@ -9,7 +9,7 @@ export const SamplePage = () => {
 
   return (
     <>
-      <FadeInTitle />
+      <FadeInLogo />
     </>
   )
 }

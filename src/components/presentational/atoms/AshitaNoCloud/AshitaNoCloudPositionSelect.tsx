@@ -6,6 +6,12 @@ type PropsType = {
 
 export const AshitaNoCloudPositionSelect = (props: PropsType) => {
   const options: JSX.Element[] = []
+  options.push(
+    <option defaultChecked defaultValue={'-'}>
+      {'-'}
+    </option>
+  )
+
   positionWeightList.forEach((data) => {
     options.push(
       <option key={data.rank} value={data.rank}>

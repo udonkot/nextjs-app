@@ -9,13 +9,13 @@ export type props = {
  * ユニットロゴ
  * @returns
  */
-export const Logo = (props: { width: number; height: number }) => {
+export const KondoLogo = (props: { width: number; height: number }) => {
   return (
     <>
       {/* <div style={{ width: '800px', height: '800px', position: 'relative' }}> */}
       <Image
-        src="/img/unitlogo.png"
-        alt="Unit Logo"
+        src="/img/kondologo.png"
+        alt="Kondo Logo"
         width={props.width}
         height={props.height}
         // style={{
@@ -28,4 +28,4 @@ export const Logo = (props: { width: number; height: number }) => {
   )
 }
 
-export default Logo
+export default KondoLogo

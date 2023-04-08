@@ -5,6 +5,9 @@ import Link from 'next/link'
 import { motion } from 'framer-motion'
 import { alignPropType } from 'react-bootstrap/esm/types'
 import { Container, Nav, Navbar } from 'react-bootstrap'
+import { Heading } from '@chakra-ui/react'
+import { useSelector } from 'react-redux'
+import { RootState } from '@/store/createStore'
 
 const visible = { opacity: 1, y: 0, transition: { duration: 0.5 } }
 const itemVariants = {
@@ -17,30 +20,14 @@ const itemVariants = {
  * @returns
  */
 export const AppHeader = () => {
+  // storeから取得
+  const title = useSelector((state: RootState) => state.appHeader.title)
+
   return (
     <>
-      {/* <div className="Header"> */}
-      {/* <Navbar>
-        <Container>
-          <Navbar.Brand href="#home">Navbar with text</Navbar.Brand>
-          <Navbar.Toggle />
-          <Navbar.Collapse className="justify-content-end">
-            <Navbar.Text>
-              Signed in as: <a href="#login">Mark Otto</a>
-            </Navbar.Text>
-          </Navbar.Collapse>
-        </Container>
-      </Navbar>
-      <Navbar>
-          <Container>
-            <Navbar.Brand href="/">
-              {' '}
-              <AiOutlineHome size="3rem" />
-            </Navbar.Brand>
-            <Navbar.Toggle />
-            <Navbar.Collapse className="justify-content-end">
-              <Navbar.Text> */}
-      ヘッダ
+      <Heading as="h2" size="xl" noOfLines={1}>
+        {title}
+      </Heading>
       {/* <Link href="/rooms/kondolabo">PersonalLabo</Link>
       {/* </Navbar.Text>
             </Navbar.Collapse>  */}

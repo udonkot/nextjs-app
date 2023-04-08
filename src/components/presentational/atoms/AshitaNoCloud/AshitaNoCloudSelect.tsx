@@ -7,10 +7,15 @@ type PropsType = {
 
 export const AshitaNoCloudSelect = (props: PropsType) => {
   const options: JSX.Element[] = []
-  let i = 0
+  options.push(
+    <option selected disabled defaultValue={'-'}>
+      {'-'}
+    </option>
+  )
 
+  let i = 0
   while (props.optionNum > i) {
-    i++
+    i = i + 1
     options.push(
       <option key={i} value={i}>
         {i}

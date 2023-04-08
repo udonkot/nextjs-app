@@ -3,6 +3,8 @@ import { useEffect, useState } from 'react'
 import Userlist from './userlist'
 import WeeklyReportCountList from './WeeklyReportCountList'
 import NextLink from 'next/link'
+import { useDispatch } from 'react-redux'
+import { setHeaderTitle } from '@/util/commonUtil'
 
 /**
  *
@@ -13,6 +15,11 @@ export const Redminelabo = () => {
   const [showReportCountMsg, setShowReportCountMsg] = useState('表示')
   const [showUser, setShowUser] = useState(false)
   const [showUserMsg, setshowUserMsg] = useState('表示')
+
+  const dispatch = useDispatch()
+
+  // storeにセット
+  setHeaderTitle('Redmine Labo Page', dispatch)
 
   /**
    * 週報提出表示非表示ボタン切替

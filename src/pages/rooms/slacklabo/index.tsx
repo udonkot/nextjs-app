@@ -6,6 +6,8 @@ import Emojilist from './emojilist'
 import Userlist from './userlist'
 import styles from '@/styles/Home.module.css'
 import NextLink from 'next/link'
+import { useDispatch } from 'react-redux'
+import { setHeaderTitle } from '@/util/commonUtil'
 
 /**
  *
@@ -18,6 +20,11 @@ export const Slacklabo = () => {
   const [showUserMsg, setshowUserMsg] = useState('表示')
   const [showEmoji, setShowEmoji] = useState(false)
   const [showEmojiMsg, setshowEmojiMsg] = useState('表示')
+
+  const dispatch = useDispatch()
+
+  // storeにセット
+  setHeaderTitle('Slack Labo Page', dispatch)
 
   useEffect(() => {}, [showChannel])
 

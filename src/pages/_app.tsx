@@ -6,9 +6,10 @@ import store from 'src/store/createStore'
 import { ChakraProvider } from '@chakra-ui/react'
 import Layout from '../components/container/template/Layout/layout'
 import { AnimatePresence } from 'framer-motion'
-import FadeInTitle from '@/components/container/organisms/FadeInTitle'
+import FadeInLogo from '@/components/presentational/molecules/Logo/FadeInLogo'
 import { useEffect, useState } from 'react'
-import '../scss/FadeInTitle.scss'
+import '@/styles/scss/FadeInTitle.scss'
+import '@/styles/scss/PersonalList.scss'
 
 export default function App({ Component, pageProps }: AppProps) {
   // const [time, setTime] = useState<Date | null>(null)
@@ -28,7 +29,7 @@ export default function App({ Component, pageProps }: AppProps) {
   return (
     <Provider store={store}>
       <ChakraProvider>
-        {!showTitle && <FadeInTitle />}
+        {!showTitle && <FadeInLogo />}
         {showTitle && (
           <Layout>
             <Component {...pageProps} />

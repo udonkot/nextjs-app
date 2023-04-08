@@ -18,7 +18,7 @@ import {
  * Slackチャンネル一覧取得API
  * @returns
  */
-const getChannelList = async () => {
+export const getChannelList = async () => {
   const response = await fetch('/api/slackapi/channellist')
   const data = await response.json()
   return data
