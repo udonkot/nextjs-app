@@ -5,9 +5,9 @@ import styles from '@/styles/Home.module.css'
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { AiOutlineHome } from 'react-icons/ai'
-import Logo from '@/components/presentational/atoms/Logo/Logo'
+import UnitLogo from '@/components/presentational/atoms/Logo/UnitLogo'
 import { motion } from 'framer-motion'
-import FadeInTitle from 'src/components/container/organisms/FadeInTitle'
+import FadeInLogo from '@/components/presentational/molecules/Logo/FadeInLogo'
 import Slacklabo from './rooms/slacklabo'
 import SlackLaboMenu from '@/components/container/template/SlackLabo/SlackLaboMenu'
 import {
@@ -21,12 +21,20 @@ import {
   SimpleGrid
 } from '@chakra-ui/react'
 import { BsThreeDotsVertical } from 'react-icons/bs'
+import { useDispatch } from 'react-redux'
+import { setState as setAppHeader } from 'src/slice/appHeaderSlice'
+import { setHeaderTitle } from '@/util/commonUtil'
 
 const inter = Inter({ subsets: ['latin'] })
 
 export default function Home({ data }: { data: { time: string } }) {
   // const serverData = JSON.parse(data.toString())
   const [showSlackMenu, setShowSlackMenu] = useState<boolean>(false)
+
+  const dispatch = useDispatch()
+
+  // storeにセット
+  setHeaderTitle('Main Page', dispatch)
 
   // const [time, setTime] = useState<Date | null>(null)
   useEffect(() => {

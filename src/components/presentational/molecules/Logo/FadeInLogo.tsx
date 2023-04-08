@@ -1,9 +1,9 @@
-import Logo from '@/components/presentational/atoms/Logo/Logo'
+import UnitLogo from '@/components/presentational/atoms/Logo/UnitLogo'
 import { Text } from '@chakra-ui/react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { useEffect } from 'react'
 
-export const FadeInTitle = () => {
+export const FadeInLogo = () => {
   useEffect(() => {
     return () => {
       console.log('unmount?')
@@ -29,7 +29,7 @@ export const FadeInTitle = () => {
                   text-align: center;
                 }
               `}</style>
-              <Logo width={400} height={400} />{' '}
+              <UnitLogo width={400} height={400} />{' '}
               <Text fontSize="6xl" textAlign="center">
                 DX Service Unit Tech Labo
               </Text>
@@ -41,4 +41,4 @@ export const FadeInTitle = () => {
   )
 }
 
-export default FadeInTitle
+export default FadeInLogo

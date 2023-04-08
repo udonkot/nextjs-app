@@ -131,6 +131,68 @@ export const positionWeightList: positionWeightType[] = [
     }
   },
   {
+    rank: '4',
+    name: '4等級：上級SE',
+    mbo: {
+      totalWeight: 70,
+      eigyoRiekiWeight: 0,
+      unitArariWeight: 20,
+      kojinArariWeight: 80
+    },
+    skillMap1: {
+      totalWeight: 20,
+      item1Weight: 1,
+      item2Weight: 1,
+      item3Weight: 1,
+      item4Weight: 1
+    },
+    skillMap2: {
+      totalWeight: 0,
+      item1Weight: 0,
+      item2Weight: 0,
+      item3Weight: 0,
+      item4Weight: 0
+    },
+    responsibility: {
+      totalWeight: 10,
+      item1Weight: 1,
+      item2Weight: 1,
+      item3Weight: 1,
+      item4Weight: 1
+    }
+  },
+  {
+    rank: '5',
+    name: '5等級：スキルコーチ',
+    mbo: {
+      totalWeight: 70,
+      eigyoRiekiWeight: 10,
+      unitArariWeight: 50,
+      kojinArariWeight: 40
+    },
+    skillMap1: {
+      totalWeight: 20,
+      item1Weight: 1,
+      item2Weight: 1,
+      item3Weight: 1,
+      item4Weight: 1
+    },
+    skillMap2: {
+      totalWeight: 0,
+      item1Weight: 0,
+      item2Weight: 0,
+      item3Weight: 0,
+      item4Weight: 0
+    },
+    responsibility: {
+      totalWeight: 10,
+      item1Weight: 1,
+      item2Weight: 1,
+      item3Weight: 1,
+      item4Weight: 1
+    }
+  },
+  {
     rank: '6',
     name: '6等級：チームコーチ',
     mbo: {
