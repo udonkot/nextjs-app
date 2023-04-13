@@ -102,6 +102,18 @@ export const Slacklabo = () => {
                 <p>SlackAPIを使用したチャンネル一覧表示※publicチャンネルのみ</p>
               </NextLink>
             </div>
+            <br />
+
+            <div className={styles.grid}>
+              <NextLink href={'/rooms/slacklabo/comments'} passHref>
+                <h3 style={{ display: 'inline' }}>
+                  4.チャンネルコメント数集計
+                </h3>
+                <p>
+                  SlackAPIを使用したユーザ毎のコメント数集計結果表示※publicチャンネルのみ
+                </p>
+              </NextLink>
+            </div>
           </div>
         </div>
       </motion.div>
