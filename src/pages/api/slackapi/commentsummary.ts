@@ -19,7 +19,7 @@ export default async function handler(
   res: NextApiResponse
 ) {
   try {
-    const token = process.env.NEXTJS_APP_SLACK_TOKEN
+    const token = process.env.NEXTJS_APP_SLACK_USERTOKEN
 
     // 取得対象のチャンネルID
     const channelId = (req.query.channelid as string) ?? ''
