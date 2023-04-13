@@ -19,8 +19,7 @@ export default async function handler(
   res: NextApiResponse
 ) {
   try {
-    const token =
-      'xoxp-83072119685-83076740145-4220488738915-a9d68a20cb895ed22ca853e5c1bc0167'
+    const token = process.env.NEXTJS_APP_SLACK_TOKEN
 
     // 取得対象のチャンネルID
     const channelId = (req.query.channelid as string) ?? ''
