@@ -105,7 +105,7 @@ export const Slacklabo = () => {
             <br />
 
             <div className={styles.grid}>
-              <NextLink href={'/rooms/slacklabo/CommentSummary'} passHref>
+              <NextLink href={'/rooms/slacklabo/comments'} passHref>
                 <h3 style={{ display: 'inline' }}>
                   4.チャンネルコメント数集計
                 </h3>
