@@ -71,7 +71,6 @@ export const CommentSummary = (props: PropType) => {
     slackCommentSummaryType[]
   >([])
 
-  // useState
   const [showRadio, setShowRadio] = useState<boolean>(false)
   const [summaryRange, setSummaryRange] = useState('')
 
@@ -125,6 +124,7 @@ export const CommentSummary = (props: PropType) => {
   const channelSelectChange: ChangeEventHandler<HTMLSelectElement> = async (
     event
   ) => {
+    setShowSummary(false)
     const channelId = event.target.value
 
     // 既に取得済みか確認
@@ -153,7 +153,8 @@ export const CommentSummary = (props: PropType) => {
       setAllChannelSummaryList(wrkSummaryList)
     }
 
-    setShowRadio(true)
+    setShowSummary(true)
+    // setShowRadio(true)
   }
 
   // 日付、ユーザ毎に集計
@@ -261,7 +262,7 @@ export const CommentSummary = (props: PropType) => {
           <br />
         </div>
       )}
-      {commentSummaryList && (
+      {showSummary && commentSummaryList && (
         <TableContainer overflowX="unset" overflowY="unset">
           <Table variant="simple" colorScheme="teal">
             <Thead position="sticky" top={0} zIndex="docked">
