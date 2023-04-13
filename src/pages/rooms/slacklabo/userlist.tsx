@@ -18,7 +18,7 @@ import {
  * Slackユーザ一覧取得API
  * @returns
  */
-const getUserList = async () => {
+export const getUserList = async () => {
   const response = await fetch('/api/slackapi/userlist')
   const data = await response.json()
   return data
