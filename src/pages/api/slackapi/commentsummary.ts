@@ -23,15 +23,19 @@ export default async function handler(
 
     // 取得対象のチャンネルID
     const channelId = (req.query.channelid as string) ?? ''
-
-    console.log(channelId)
+    // 集計タイプ
+    const summarytype = (req.query.summarytype as string) ?? ''
+    // 開始時間
+    const startTime = (req.query.startTime as string) ?? ''
+    // 終了時間
+    const endTime = (req.query.endTime as string) ?? ''
 
     const client = new WebClient(token)
-
     const option: ConversationsHistoryArguments = {
       channel: channelId,
-
-      limit: 1000
+      limit: 1000,
+      latest: endTime,
+      oldest: startTime
     }
 
     // const emojiList: slackEmojiType[] = []
@@ -58,10 +62,17 @@ export default async function handler(
           if (msg.thread_ts !== undefined) {
             threadTsList.push(msg.thread_ts)
           } else {
+            let commentDate = ''
+            if (summarytype === 'month') {
+              commentDate = convertDate(msg.ts).slice(0, 7)
+            } else {
+              commentDate = convertDate(msg.ts)
+            }
+
             // 日付を変換
             const commentData: slackCommentType = {
               name: msg.user ?? '',
-              date: convertDate(msg.ts)
+              date: commentDate
             }
             comentDataList.push(commentData)
           }
@@ -69,22 +80,23 @@ export default async function handler(
       })
 
     if (threadTsList.length > 0) {
-      const replyResponse: ConversationsRepliesResponse[] = await Promise.all(
-        threadTsList.map(async (threadTs) => {
-          const threadMsg = await getThreadResponse(threadTs)
-          return threadMsg
-        })
-      )
-
-      replyResponse.forEach((reply) => {
+      await threadTsList.reduce(async (prev, curr) => {
+        await prev
+        const reply = await getThreadResponse(curr)
         reply.messages?.forEach((msg) => {
+          let commentDate = ''
+          if (summarytype === 'month') {
+            commentDate = convertDate(msg.ts ?? '').slice(0, 7)
+          } else {
+            commentDate = convertDate(msg.ts ?? '')
+          }
           const commentData: slackCommentType = {
             name: msg.user ?? '',
-            date: convertDate(msg.ts ?? '')
+            date: commentDate
           }
           comentDataList.push(commentData)
         })
-      })
+      }, Promise.resolve())
     }
 
     const ret: slackCommentSummaryType[] = []

@@ -4,11 +4,7 @@ import { AnimatePresence, motion } from 'framer-motion'
 import { useEffect } from 'react'
 
 export const FadeInLogo = () => {
-  useEffect(() => {
-    return () => {
-      console.log('unmount?')
-    }
-  }, [])
+  useEffect(() => {}, [])
 
   return (
     <>

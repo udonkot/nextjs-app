@@ -15,7 +15,7 @@ export const SlackChannelSelect = (props: PropType) => {
   // オプション情報生成
   const options: JSX.Element[] = []
   options.push(
-    <option key={'-'} disabled defaultValue="-">
+    <option key={'-'} defaultChecked defaultValue="-">
       {'-'}
     </option>
   )

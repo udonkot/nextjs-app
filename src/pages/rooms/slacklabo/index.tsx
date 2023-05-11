@@ -7,7 +7,7 @@ import Userlist from './userlist'
 import styles from '@/styles/Home.module.css'
 import NextLink from 'next/link'
 import { useDispatch } from 'react-redux'
-import { setHeaderTitle } from '@/util/commonUtil'
+import { setAppHeaderArea } from '@/util/commonUtil'
 
 /**
  *
@@ -24,7 +24,7 @@ export const Slacklabo = () => {
   const dispatch = useDispatch()
 
   // storeにセット
-  setHeaderTitle('Slack Labo Page', dispatch)
+  setAppHeaderArea('Slack Labo Page', ['main', 'slacklabo'], dispatch)
 
   useEffect(() => {}, [showChannel])
 
@@ -75,10 +75,6 @@ export const Slacklabo = () => {
         // }}
       >
         <div className="contents">
-          <div className="header">
-            <h2>SlackLabo page!</h2>
-            <br />
-          </div>
           <div className="body">
             <div className={styles.grid}>
               <NextLink href={'/rooms/slacklabo/userlist'} passHref>
