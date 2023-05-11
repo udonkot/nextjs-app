@@ -3,10 +3,12 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 export type appHeaderState = {
   title: string
+  braedCrumbList: string[]
 }
 
 export const initialState: appHeaderState = {
-  title: ''
+  title: '',
+  braedCrumbList: []
 }
 
 const appHeaderSlice = createSlice({

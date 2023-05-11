@@ -6,11 +6,16 @@ import { setState as setAppHeader } from 'src/slice/appHeaderSlice'
  * @param val
  * @param dispatch
  */
-export const setHeaderTitle = (val: string, dispatch: Dispatch) => {
+export const setAppHeaderArea = (
+  title: string,
+  braedCrumbList: string[],
+  dispatch: Dispatch
+) => {
   // storeにセット
   dispatch(
     setAppHeader({
-      title: val
+      title: title,
+      braedCrumbList: braedCrumbList
     })
   )
 }

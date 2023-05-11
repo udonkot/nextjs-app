@@ -5,7 +5,12 @@ import Link from 'next/link'
 import { motion } from 'framer-motion'
 import { alignPropType } from 'react-bootstrap/esm/types'
 import { Container, Nav, Navbar } from 'react-bootstrap'
-import { Heading } from '@chakra-ui/react'
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  Heading
+} from '@chakra-ui/react'
 import { useSelector } from 'react-redux'
 import { RootState } from '@/store/createStore'
 
@@ -21,12 +26,25 @@ const itemVariants = {
  */
 export const AppHeader = () => {
   // storeから取得
-  const title = useSelector((state: RootState) => state.appHeader.title)
+  const appHeader = useSelector((state: RootState) => state.appHeader)
+
+  const createBreadCrumb = () => {
+    const breadClumbItemList: JSX.Element[] = []
+    appHeader.braedCrumbList.forEach((item) => {
+      breadClumbItemList.push(
+        <BreadcrumbItem>
+          <BreadcrumbLink href={item}>{item}</BreadcrumbLink>
+        </BreadcrumbItem>
+      )
+    })
+    return breadClumbItemList
+  }
 
   return (
     <>
       <Heading as="h2" size="xl" noOfLines={1}>
-        {title}
+        {appHeader.title}
+        <Breadcrumb>{createBreadCrumb()}</Breadcrumb>
       </Heading>
       {/* <Link href="/rooms/kondolabo">PersonalLabo</Link>
       {/* </Navbar.Text>

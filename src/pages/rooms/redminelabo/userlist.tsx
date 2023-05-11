@@ -51,7 +51,6 @@ export const UserList = () => {
 
   const dispUserList = () => {
     const dataList: JSX.Element[] = []
-    console.log(userList)
     if (userList.length > 0) {
       userList?.forEach((data, idx) => {
         dataList.push(
