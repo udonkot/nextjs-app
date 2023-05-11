@@ -4,7 +4,7 @@ import Userlist from './userlist'
 import WeeklyReportCountList from './WeeklyReportCountList'
 import NextLink from 'next/link'
 import { useDispatch } from 'react-redux'
-import { setHeaderTitle } from '@/util/commonUtil'
+import { setAppHeaderArea } from '@/util/commonUtil'
 
 /**
  *
@@ -19,7 +19,7 @@ export const Redminelabo = () => {
   const dispatch = useDispatch()
 
   // storeにセット
-  setHeaderTitle('Redmine Labo Page', dispatch)
+  setAppHeaderArea('Redmine Labo Page', ['main'], dispatch)
 
   /**
    * 週報提出表示非表示ボタン切替
