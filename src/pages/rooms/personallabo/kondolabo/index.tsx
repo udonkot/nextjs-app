@@ -15,7 +15,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { setState as setAppHeader } from 'src/slice/appHeaderSlice'
 
 import { RootState } from '@/store/createStore'
-import { setHeaderTitle } from '@/util/commonUtil'
+import { setAppHeaderArea } from '@/util/commonUtil'
 
 const sendMessage = async (message: string) => {
   await fetch('/api/slackapi/postmessage?text=' + message)
@@ -32,7 +32,8 @@ const getReaction = async (channel: string) => {
 export const Kondo = () => {
   const dispatch = useDispatch()
 
-  setHeaderTitle('Kondo Page', dispatch)
+  // storeにセット
+  setAppHeaderArea('Kondo Page', ['main', 'Personal Labo'], dispatch)
 
   const [message, setMessage] = useState('')
   const [channel, setChannel] = useState('')
