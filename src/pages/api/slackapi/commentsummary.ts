@@ -32,9 +32,6 @@ export default async function handler(
     // 検索開始時間
     const searchTime = (req.query.searchTime as string) ?? ''
 
-    console.log(startTime)
-    console.log(endTime)
-
     const client = new WebClient(token)
     const option: ConversationsHistoryArguments = {
       channel: channelId,
@@ -64,7 +61,7 @@ export default async function handler(
       // ?.filter((msg) => msg.user === 'U2F28MS49')
       .forEach((msg) => {
         if (msg.ts !== undefined) {
-          console.log(msg.ts)
+          // console.log(msg.ts)
           // スレッド内にコメントがある場合は別途取得
           if (msg.thread_ts !== undefined) {
             threadTsList.push(msg.thread_ts)
@@ -88,32 +85,6 @@ export default async function handler(
         }
       })
 
-    // apiResponse.messages
-    //   ?.filter((msg) => msg.files !== undefined)
-    //   .forEach((msg) => {
-    //     if (msg.ts !== undefined) {
-    //       console.log(msg.ts)
-    //       // スレッド内にコメントがある場合は別途取得
-    //       if (msg.thread_ts !== undefined) {
-    //         threadTsList.push(msg.thread_ts)
-    //       } else {
-    //         let commentDate = ''
-    //         if (summarytype === 'month') {
-    //           commentDate = convertDate(msg.ts).slice(0, 7)
-    //         } else {
-    //           commentDate = convertDate(msg.ts)
-    //         }
-
-    //         // 日付を変換
-    //         const commentData: slackCommentType = {
-    //           name: msg.user ?? '',
-    //           date: commentDate
-    //         }
-    //         comentDataList.push(commentData)
-    //       }
-    //     }
-    //   })
-
     if (threadTsList.length > 0) {
       await threadTsList.reduce(async (prev, curr) => {
         await prev
@@ -124,7 +95,7 @@ export default async function handler(
             searchTime <= msg.ts &&
             msg.ts <= endTime
           ) {
-            console.log(msg.ts)
+            // console.log(msg.ts)
             let commentDate = ''
             if (summarytype === 'month') {
               commentDate = convertDate(msg.ts ?? '').slice(0, 7)
