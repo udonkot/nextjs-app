@@ -1,4 +1,6 @@
-import { motion } from 'framer-motion'
+import Link from 'next/link'
+import { Button } from '@chakra-ui/react'
+import { motion, spring } from 'framer-motion'
 
 type props = {
   num: number
@@ -13,11 +15,12 @@ const PersonalList = () => {
 
   const alternate = {
     even: {
+      top: -10,
       y: '100vh',
       transition: transition
     },
     odd: {
-      top: 0,
+      top: -10,
       y: '-100vh',
       transition: transition
     }
@@ -27,18 +30,40 @@ const PersonalList = () => {
 
   return (
     <>
-      <motion.div id="curtains">
-        {persnalList.map((x, i) => (
-          <motion.div
-            animate={i % 2 == 0 ? 'odd' : 'even'}
-            className="curtain"
-            variants={alternate}
-            key={i}
-          >
-            {x}
-          </motion.div>
-        ))}
-        hogehoge
+      {/* {persnalList.map((x, i) => (
+        <motion.div
+          animate={i % 2 == 0 ? 'odd' : 'even'}
+          className="curtain"
+          variants={alternate}
+          key={i}
+        >
+          {x}
+        </motion.div>
+      ))} */}
+      {/* <motion.div id="curtain">
+        <div>hogehoge</div>
+        <div>piyo</div>
+      </motion.div> */}
+      <motion.div
+        initial={{ opacity: 1, x: 0 }} // 初期状態
+        className="curtain"
+        transition={{ type: spring }} // アンマウント時
+      >
+        <div className="contents">
+          <Link href="/rooms/personallabo/kondolabo">
+            <Button>View here</Button>
+          </Link>
+        </div>
+      </motion.div>
+      <motion.div
+        initial={{ opacity: 1, x: -10 }} // 初期状態
+        className="curtain"
+        animate={{ opacity: 10, x: 10 }} // マウント時
+        exit={{ opacity: 0, y: 10 }} // アンマウント時
+      >
+        <div className="contents">
+          <div className="body">piyopiyo</div>
+        </div>
       </motion.div>
     </>
   )

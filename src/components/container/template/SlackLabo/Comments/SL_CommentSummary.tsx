@@ -19,7 +19,10 @@ import { setState as setStateSlackCommentSummary } from 'src/slice/slackCommentS
 import { getUserList } from 'src/pages/rooms/slacklabo/userlist'
 import SlackChannelSelect from '@/components/presentational/atoms/Slack/SlackChannnelSelect'
 import {
+  Box,
   Button,
+  Collapse,
+  Fade,
   Radio,
   RadioGroup,
   Stack,
@@ -31,7 +34,8 @@ import {
   Tr
 } from '@chakra-ui/react'
 import YmdSelect from '@/components/presentational/atoms/Date/YmdSelect'
-import { convertDate } from '@/util/slackapiUtil'
+import { convertDate, createYYYYMM, get3MonthDate } from '@/util/slackapiUtil'
+import { motion } from 'framer-motion'
 
 /**
  * Slackチャンネル一覧取得API
@@ -40,7 +44,8 @@ import { convertDate } from '@/util/slackapiUtil'
 export const getCommentSummary = async (
   channelId: string,
   startTime?: string,
-  endTime?: string
+  endTime?: string,
+  searchTime?: string
 ) => {
   let reqParam = 'channelid='.concat(channelId)
 
@@ -52,7 +57,12 @@ export const getCommentSummary = async (
     reqParam = reqParam.concat('&endTime=', endTime)
   }
 
+  if (searchTime !== undefined) {
+    reqParam = reqParam.concat('&searchTime=', searchTime)
+  }
+
   const response = await fetch('/api/slackapi/commentsummary?'.concat(reqParam))
+  console.log('/api/slackapi/commentsummary?'.concat(reqParam))
   const data = await response.json()
   return data
 }
@@ -91,15 +101,24 @@ export const SL_CommentSummary = (props: PropType) => {
     slackCommentSummaryType[]
   >([])
 
+  // 表示チャンネルの集計結果格納用
+  const [displaySummaryList, setDisplaySummaryList] = useState<
+    slackCommentSummaryType[]
+  >([])
+
   const [showRadio, setShowRadio] = useState<boolean>(false)
   const [summaryRange, setSummaryRange] = useState('')
 
   const [showSummary, setShowSummary] = useState<boolean>(false)
 
-  const [isLoading, setLoading] = useState<boolean>(false)
+  const [isLoadingAction2, setLoadingAction2] = useState<boolean>(false)
+  const [isLoadingAction3, setLoadingAction3] = useState<boolean>(false)
 
   const [channelId, setChannelId] = useState<string>('')
   const [targetDate, setTargetDate] = useState<Date>()
+
+  const [showAdtion2, setShowAdtion2] = useState<boolean>(false)
+  const [showAdtion3, setShowAdtion3] = useState<boolean>(false)
 
   // 初期表示後の処理
   useEffect(() => {
@@ -151,12 +170,15 @@ export const SL_CommentSummary = (props: PropType) => {
   ) => {
     setShowSummary(false)
     setChannelId(event.target.value)
+    setCommentSummaryList([])
+    setShowAdtion2(true)
+    setShowAdtion3(false)
   }
 
   // 日付、ユーザ毎に集計
   const dispDateUserSummary = () => {
     let wrkDispSummaryList: dispSummaryType[] = []
-    commentSummaryList.forEach((data, idx) => {
+    displaySummaryList.forEach((data, idx) => {
       const dispIdx = wrkDispSummaryList.findIndex(
         (dispData) =>
           dispData.name === data.commentInfo.name &&
@@ -220,47 +242,82 @@ export const SL_CommentSummary = (props: PropType) => {
     setSummaryRange(event.target.value)
   }
 
-  const doProc: MouseEventHandler<HTMLButtonElement> = async (event) => {
-    setLoading(true)
+  const doProcAction3: MouseEventHandler<HTMLButtonElement> = async (event) => {
+    setLoadingAction3(true)
+    const showYmd = createYYYYMM(
+      targetDate?.toLocaleDateString('ja-JP').split('/') ?? []
+    )
+    setDisplaySummaryList(
+      commentSummaryList.filter(
+        (data) => data.commentInfo.date.slice(0, 7) === showYmd
+      )
+    )
+
+    setShowSummary(true)
+    setLoadingAction3(false)
+  }
+
+  /**
+   * 実行ボタン押下
+   * @param event
+   * @returns
+   */
+  const doProcAction2: MouseEventHandler<HTMLButtonElement> = async (event) => {
+    setLoadingAction2(true)
     setShowSummary(false)
 
     let startTime = ''
     let endTime = ''
+    let searchTime = ''
 
-    if (targetDate) {
-      const startDate = new Date(
-        targetDate.getFullYear(),
-        targetDate.getMonth(),
-        1
-      )
-      startTime = String(startDate.getTime())
-      startTime = startTime.slice(0, 10).concat('.', startTime.slice(10))
+    const threeMonth = get3MonthDate()
 
-      const endDate = new Date(
-        targetDate.getFullYear(),
-        targetDate.getMonth() + 1,
-        0
-      )
-      endTime = String(endDate.getTime())
-      endTime = endTime.slice(0, 10).concat('.', endTime.slice(10))
-    } else {
-      return
-    }
+    threeMonth
+
+    // 取得開始日
+    const startDate = new Date(
+      threeMonth[2].getFullYear(),
+      threeMonth[2].getMonth() - 1,
+      0,
+      23,
+      59,
+      59
+    )
+    // console.log('startDate;' + startDate)
+    startTime = String(startDate.getTime())
+    startTime = startTime.slice(0, 10).concat('.', startTime.slice(10))
+
+    // 取得終了日
+    const endDate = new Date(
+      threeMonth[0].getFullYear(),
+      threeMonth[0].getMonth() + 1,
+      1
+    )
+    // console.log('endDate;' + endDate)
+    endTime = String(endDate.getTime())
+    endTime = endTime.slice(0, 10).concat('.', endTime.slice(10))
+
+    // 検索開始日
+    const searchDate = startDate
+    // console.log('searchDate;' + searchDate)
+    searchTime = String(searchDate.getTime())
+    searchTime = searchTime.slice(0, 10).concat('.', searchTime.slice(10))
 
     // 既に取得済みか確認
     const channelSummary = allChannelSummaryList.find((summary) => {
       summary.channelId === channelId
     })
 
-    if (channelSummary) {
+    if (commentSummaryList.length !== 0) {
       // あればstate更新
-      setCommentSummaryList(channelSummary.slackCommentSummaryList)
+      // setCommentSummaryList(channelSummary.slackCommentSummaryList)
     } else {
       // なければ取得してstate更新
       const summary = (await getCommentSummary(
         channelId,
         startTime !== '' ? startTime : undefined,
-        endTime !== '' ? endTime : undefined
+        endTime !== '' ? endTime : undefined,
+        searchTime !== '' ? searchTime : undefined
       )) as slackCommentSummaryType[]
       setCommentSummaryList(summary)
 
@@ -275,8 +332,8 @@ export const SL_CommentSummary = (props: PropType) => {
       setAllChannelSummaryList(wrkSummaryList)
     }
 
-    setShowSummary(true)
-    setLoading(false)
+    setLoadingAction2(false)
+    setShowAdtion3(true)
     // setShowRadio(true)
   }
 
@@ -292,22 +349,44 @@ export const SL_CommentSummary = (props: PropType) => {
             channelInfo={channelList}
             onChange={channelSelectChange}
           />
-          <br />
-          <label>２．集計期間を選択してください。</label>
-          <br />
-          <YmdSelect setTargetDate={setTargetDate} />
-          <br />
-          <label>３．ボタンを押してください</label>
-          <br />
-          <Button
-            isLoading={isLoading}
-            colorScheme="blue"
-            loadingText="実行中"
-            onClick={doProc}
-          >
-            実行
-          </Button>
-          <br />
+          {showAdtion2 && (
+            // ↓が上から段々と表示される
+            <Collapse in={showAdtion2} animateOpacity>
+              <Box>
+                ↓
+                <br />
+                <label>２．集計ボタンを押してください</label>
+                <br />
+                <Button
+                  isLoading={isLoadingAction2}
+                  colorScheme="blue"
+                  loadingText="集計中"
+                  onClick={doProcAction2}
+                >
+                  集計
+                </Button>
+              </Box>
+            </Collapse>
+          )}
+          {showAdtion3 && (
+            <>
+              ↓
+              <br />
+              <label>３．表示期間を選択して表示ボタンを押してください。</label>
+              <br />
+              <YmdSelect setTargetDate={setTargetDate} />
+              <br />
+              <Button
+                isLoading={isLoadingAction3}
+                colorScheme="blue"
+                loadingText="表示"
+                onClick={doProcAction3}
+              >
+                表示
+              </Button>
+              <br />
+            </>
+          )}
         </div>
       )}
 

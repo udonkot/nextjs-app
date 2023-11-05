@@ -29,6 +29,8 @@ export default async function handler(
     const startTime = (req.query.startTime as string) ?? ''
     // 終了時間
     const endTime = (req.query.endTime as string) ?? ''
+    // 検索開始時間
+    const searchTime = (req.query.searchTime as string) ?? ''
 
     const client = new WebClient(token)
     const option: ConversationsHistoryArguments = {
@@ -56,25 +58,29 @@ export default async function handler(
 
     apiResponse.messages
       ?.filter((msg) => msg.subtype === undefined)
+      // ?.filter((msg) => msg.user === 'U2F28MS49')
       .forEach((msg) => {
         if (msg.ts !== undefined) {
+          // console.log(msg.ts)
           // スレッド内にコメントがある場合は別途取得
           if (msg.thread_ts !== undefined) {
             threadTsList.push(msg.thread_ts)
           } else {
-            let commentDate = ''
-            if (summarytype === 'month') {
-              commentDate = convertDate(msg.ts).slice(0, 7)
-            } else {
-              commentDate = convertDate(msg.ts)
-            }
+            if (searchTime <= msg.ts && msg.ts <= endTime) {
+              let commentDate = ''
+              if (summarytype === 'month') {
+                commentDate = convertDate(msg.ts).slice(0, 7)
+              } else {
+                commentDate = convertDate(msg.ts)
+              }
 
-            // 日付を変換
-            const commentData: slackCommentType = {
-              name: msg.user ?? '',
-              date: commentDate
+              // 日付を変換
+              const commentData: slackCommentType = {
+                name: msg.user ?? '',
+                date: commentDate
+              }
+              comentDataList.push(commentData)
             }
-            comentDataList.push(commentData)
           }
         }
       })
@@ -84,17 +90,24 @@ export default async function handler(
         await prev
         const reply = await getThreadResponse(curr)
         reply.messages?.forEach((msg) => {
-          let commentDate = ''
-          if (summarytype === 'month') {
-            commentDate = convertDate(msg.ts ?? '').slice(0, 7)
-          } else {
-            commentDate = convertDate(msg.ts ?? '')
+          if (
+            msg.ts !== undefined &&
+            searchTime <= msg.ts &&
+            msg.ts <= endTime
+          ) {
+            // console.log(msg.ts)
+            let commentDate = ''
+            if (summarytype === 'month') {
+              commentDate = convertDate(msg.ts ?? '').slice(0, 7)
+            } else {
+              commentDate = convertDate(msg.ts ?? '')
+            }
+            const commentData: slackCommentType = {
+              name: msg.user ?? '',
+              date: commentDate
+            }
+            comentDataList.push(commentData)
           }
-          const commentData: slackCommentType = {
-            name: msg.user ?? '',
-            date: commentDate
-          }
-          comentDataList.push(commentData)
         })
       }, Promise.resolve())
     }

@@ -73,7 +73,7 @@ export default function Home({ data }: { data: { time: string } }) {
             <Text>個人的な学習、動作検証用</Text>
           </CardBody>
           <CardFooter>
-            <Link href="/rooms/personallabo/kondolabo">
+            <Link href="/rooms/personallabo">
               <Button>View here</Button>
             </Link>
           </CardFooter>

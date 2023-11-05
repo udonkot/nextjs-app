@@ -37,5 +37,10 @@
     "react-redux": "^8.0.5",
     "sass": "^1.60.0",
     "typescript": "4.9.5"
+  },
+  "devDependencies": {
+    "@types/jest": "^29.5.2",
+    "jest": "28.0.0",
+    "ts-jest": "28.0.0"
   }
 }
