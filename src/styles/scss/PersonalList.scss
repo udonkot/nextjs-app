@@ -1,0 +1,17 @@
+#curtains {
+  /* this is the container of all curtains */
+  width: 100vw;
+  position: absolute;
+  overflow: hidden;
+  top: 0;
+  left: 0;
+}
+.curtain {
+  /* a single curtain */
+  background: white;
+  border-right: 1px rgb(247, 247, 247) solid;
+  height: 100vh;
+  width: 25vw; /* change if you want more columns */
+  // float: left;
+  display: inline-block;
+}
