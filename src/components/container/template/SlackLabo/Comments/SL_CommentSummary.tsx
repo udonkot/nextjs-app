@@ -40,7 +40,8 @@ import { convertDate } from '@/util/slackapiUtil'
 export const getCommentSummary = async (
   channelId: string,
   startTime?: string,
-  endTime?: string
+  endTime?: string,
+  searchTime?: string
 ) => {
   let reqParam = 'channelid='.concat(channelId)
 
@@ -52,7 +53,12 @@ export const getCommentSummary = async (
     reqParam = reqParam.concat('&endTime=', endTime)
   }
 
+  if (searchTime !== undefined) {
+    reqParam = reqParam.concat('&searchTime=', searchTime)
+  }
+
   const response = await fetch('/api/slackapi/commentsummary?'.concat(reqParam))
+  console.log('/api/slackapi/commentsummary?'.concat(reqParam))
   const data = await response.json()
   return data
 }
@@ -220,29 +226,55 @@ export const SL_CommentSummary = (props: PropType) => {
     setSummaryRange(event.target.value)
   }
 
+  /**
+   * 実行ボタン押下
+   * @param event
+   * @returns
+   */
   const doProc: MouseEventHandler<HTMLButtonElement> = async (event) => {
     setLoading(true)
     setShowSummary(false)
 
     let startTime = ''
     let endTime = ''
+    let searchTime = ''
 
     if (targetDate) {
+      // 取得開始日
       const startDate = new Date(
         targetDate.getFullYear(),
-        targetDate.getMonth(),
-        1
+        targetDate.getMonth() - 2,
+        0,
+        23,
+        59,
+        59
       )
+      console.log('startDate;' + startDate)
       startTime = String(startDate.getTime())
       startTime = startTime.slice(0, 10).concat('.', startTime.slice(10))
 
+      // 取得終了日
       const endDate = new Date(
         targetDate.getFullYear(),
         targetDate.getMonth() + 1,
-        0
+        1
       )
+      console.log('endDate;' + endDate)
       endTime = String(endDate.getTime())
       endTime = endTime.slice(0, 10).concat('.', endTime.slice(10))
+
+      // 検索開始日
+      const searchDate = new Date(
+        targetDate.getFullYear(),
+        targetDate.getMonth() - 2,
+        0,
+        23,
+        59,
+        59
+      )
+      console.log('searchDate;' + searchDate)
+      searchTime = String(searchDate.getTime())
+      searchTime = searchTime.slice(0, 10).concat('.', searchTime.slice(10))
     } else {
       return
     }
@@ -260,7 +292,8 @@ export const SL_CommentSummary = (props: PropType) => {
       const summary = (await getCommentSummary(
         channelId,
         startTime !== '' ? startTime : undefined,
-        endTime !== '' ? endTime : undefined
+        endTime !== '' ? endTime : undefined,
+        searchTime !== '' ? searchTime : undefined
       )) as slackCommentSummaryType[]
       setCommentSummaryList(summary)
 
