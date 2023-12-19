@@ -344,6 +344,7 @@ export const SL_CommentSummary = (props: PropType) => {
       {channelList.length > 0 && (
         <div>
           <label>１．集計対象のチャンネルを選択してください。</label>
+          <label>ほげほげ</label>
           <br />
           <SlackChannelSelect
             channelInfo={channelList}
