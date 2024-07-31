@@ -53,25 +53,27 @@ export const createYYYYMM = (data: string[]): string => {
  * YYYY/MM形式の直近3か月のDate型を取得する
  */
 export const get3MonthDate = (): Date[] => {
-  const date = new Date()
-  // 当月を追加
-  const ret: Date[] = []
+  let ret: Date[] = []
 
-  // 前月、2ヶ月前を追加
-  for (let i = 0; 3 > i; i += 1) {
-    const wrkDate = new Date()
-    const wrkMonth = wrkDate.getMonth() - i
+  const wrkDate = new Date()
+  for (let i = 0; i < 3; i += 1) {
+    const wrkMonth = wrkDate.getMonth() - 1
     if (wrkMonth <= 0) {
       // 前年を取得
       wrkDate.setFullYear(wrkDate.getFullYear() - 1)
-      wrkDate.setMonth(13 - i)
+      wrkDate.setMonth(13 - 1)
       wrkDate.setDate(1)
     } else {
       wrkDate.setMonth(wrkMonth)
       wrkDate.setDate(1)
+      wrkDate.setMinutes(0)
     }
-    ret.push(wrkDate)
+    // console.log('wrkDate:' + wrkDate)
+    ret.push(new Date(wrkDate))
+    // console.log('wrkMonth:' + wrkMonth)
   }
+
+  // console.log('ret:' + ret.length)
 
   return ret
 }

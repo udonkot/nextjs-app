@@ -272,8 +272,6 @@ export const SL_CommentSummary = (props: PropType) => {
 
     const threeMonth = get3MonthDate()
 
-    threeMonth
-
     // 取得開始日
     const startDate = new Date(
       threeMonth[2].getFullYear(),
@@ -283,7 +281,6 @@ export const SL_CommentSummary = (props: PropType) => {
       59,
       59
     )
-    // console.log('startDate;' + startDate)
     startTime = String(startDate.getTime())
     startTime = startTime.slice(0, 10).concat('.', startTime.slice(10))
 
@@ -344,7 +341,6 @@ export const SL_CommentSummary = (props: PropType) => {
       {channelList.length > 0 && (
         <div>
           <label>１．集計対象のチャンネルを選択してください。</label>
-          <label>ほげほげ</label>
           <br />
           <SlackChannelSelect
             channelInfo={channelList}
